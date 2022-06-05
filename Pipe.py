@@ -18,8 +18,9 @@ class Pipe:
         self.set_height()
 
     def set_height(self):
-        self.height = random.randrange(50, 450)
-        self.top = self.height - self.pipe_top.get_height()
+        gap = random.randrange(54, 100)
+        self.height = random.randrange(150, 450)
+        self.top = self.height - self.pipe_top.get_height() - gap
         self.bottom = self.height + self.gap
 
     def move(self):
