@@ -6,6 +6,9 @@ import neat
 from Bird import Bird
 from Pipe import Pipe
 from Base import Base
+import matplotlib.pyplot as plt
+import numpy as np
+import warnings
 
 pg.init()
 pg.font.init()
@@ -36,8 +39,10 @@ def draw_window(screen, birds, pipes, base, score):
 
     pg.display.update()
 
+gl_score = 0
 
 def main(genomes, config):
+    global gl_score
     nets = []
     ge = []
     birds = []
@@ -89,6 +94,7 @@ def main(genomes, config):
                     birds.pop(x)
                     nets.pop(x)
                     ge.pop(x)
+                    gl_score = score
 
                 if not pipe.passed and pipe.x < bird.x:
                     pipe.passed = True
@@ -115,6 +121,7 @@ def main(genomes, config):
                 birds.pop(x)
                 nets.pop(x)
                 ge.pop(x)
+                gl_score = score
 
         # bird.move()
         base.move()
@@ -128,10 +135,10 @@ def run(config_file):
                                 neat.DefaultSpeciesSet, neat.DefaultStagnation,
                                 config_file)
 
-    choice = input("If you want to start training 1 if you want to load previous training 2")
+    choice = input("If you want to start training 1 if you want to load previous training 2\n")
 
-    if choice == 1:
-        num_gen = input("Enter the number of generation")
+    if choice == '1':
+        num_gen = int(input("Enter the number of generatio\n"))
 
         p = neat.Population(config)
         p.add_reporter(neat.StdOutReporter(True))
@@ -162,3 +169,4 @@ if __name__ == "__main__":
     local_dir = os.path.dirname(__file__)
     config_path = os.path.join(local_dir, "config-feedforward.txt")
     run(config_path)
+    print(gl_score)
